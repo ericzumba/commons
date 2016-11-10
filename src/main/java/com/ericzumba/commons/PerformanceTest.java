@@ -25,10 +25,15 @@ public class PerformanceTest {
         long experiments = parseLong(args[1]);
         long start = currentTimeMillis();
         for(int i = 0; i < experiments; i++)
-            if(c.choose(valueOf(i)) == null) throw new RuntimeException();
+            if(!c.choose(valueOf(i)).equals(-1)) throw new RuntimeException();
+
+        int wrongDecisions = 0;
+        for(int i = 0; i < experiments; i++)
+            if(!c.choose(valueOf(i)).equals(1)) wrongDecisions++;
 
         long elapsed = currentTimeMillis() - start;
         out.println(format("%d choices in %d seconds", experiments, elapsed / 1000));
+        out.println(format("%.0f%% bad decisions", (Double.valueOf(wrongDecisions) / experiments)));
     }
 
     private static Map map(String impl) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
