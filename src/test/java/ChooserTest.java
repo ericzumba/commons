@@ -15,6 +15,6 @@ public class ChooserTest {
 
     @Test
     public void chooser() {
-        assertEquals("a", new Chooser(x -> "a", x -> "b").choose(42));
+        assertEquals(0, new Chooser(x -> 0, x -> 42).choose("a"));
     }
 }

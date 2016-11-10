@@ -8,11 +8,11 @@ import java.util.function.Function;
  */
 public class Chooser<T, R> {
     private final Function<T, R> firstChoice;
-    private final Function<T, R> secondChoice;
+    private final Function<T, R> alternative;
 
-    public Chooser(Function<T, R> firstChoice, Function<T, R> secondChoice) {
+    public Chooser(Function<T, R> firstChoice, Function<T, R> alternative) {
         this.firstChoice = firstChoice;
-        this.secondChoice = secondChoice;
+        this.alternative = alternative;
     }
 
     public Chooser<T, R> rule(Object o) {
@@ -20,6 +20,16 @@ public class Chooser<T, R> {
     }
 
     public R choose(T t) {
-        return firstChoice.apply(t);
+        if(!shouldAlternative(t))
+            return register(t, firstChoice.apply(t));
+        return register(t, alternative.apply(t));
+    }
+
+    private R register(T t, R r) {
+        return r;
+    }
+
+    private boolean shouldAlternative(T t) {
+        return false;
     }
 }
