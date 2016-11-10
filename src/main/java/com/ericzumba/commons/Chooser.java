@@ -1,3 +1,5 @@
+package com.ericzumba.commons;
+
 import java.util.function.Function;
 
 /*
@@ -7,15 +9,15 @@ import java.util.function.Function;
  * @author ericzumba, @date 11/10/16 12:13 AM
  */
 public class Chooser<T, R> {
-    private final Function<T, R> firstChoice;
-    private final Function<T, R> alternative;
+    public final Function<T, R> firstChoice;
+    public final Function<T, R> alternative;
 
     public Chooser(Function<T, R> firstChoice, Function<T, R> alternative) {
         this.firstChoice = firstChoice;
         this.alternative = alternative;
     }
 
-    public Chooser<T, R> rule(Object o) {
+    public Chooser<T, R> rule(Function<R, Function<T, R>> rule) {
         return this;
     }
 
