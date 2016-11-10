@@ -18,10 +18,11 @@ import static java.util.Collections.unmodifiableList;
  */
 public class Chooser<T, R> {
     public final List<Function<T, R>> choices;
-    public Map<T, Function<T, R>> knowledge = new ConcurrentHashMap<>();
+    public final Map<T, Function<T, R>> knowledge;
     private Function<R, Function<T, R>> rule;
 
-    public Chooser(Function<T, R>... choices) {
+    public Chooser(Map<T, Function<T, R>> knowledge, Function<T, R>... choices) {
+        this.knowledge = knowledge;
         this.choices = unmodifiableList(asList(choices));
     }
 

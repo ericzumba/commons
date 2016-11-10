@@ -3,6 +3,8 @@ package com.ericzumba.commons;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static java.lang.Integer.valueOf;
 import static org.junit.Assert.*;
 
@@ -18,7 +20,7 @@ public class ChooserTest {
 
     @Before
     public void setUp() throws Exception {
-        c = new Chooser<>(ques -> -1, ques -> 1);
+        c = new Chooser<>(new HashMap<>(), ques -> -1, ques -> 1);
         c.installRule((answ) -> (answ < 0) ? c.choices(1) : c.choices(0));
     }
 
