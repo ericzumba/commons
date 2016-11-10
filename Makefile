@@ -4,4 +4,4 @@ jar:
 	gradle build
 
 run: jar
-	java -jar $(ARTIFACT) java.util.concurrent.ConcurrentHashMap	1000000
+	java -Xmx256m -Xms256m -jar $(ARTIFACT) java.util.concurrent.ConcurrentHashMap	1000000

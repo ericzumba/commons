@@ -9,12 +9,16 @@ import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.lang.System.currentTimeMillis;
 import static java.lang.System.out;
+import static java.lang.Thread.sleep;
 
 /**
  * Created by erictorti on 11/10/16.
  */
 public class PerformanceTest {
-    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InterruptedException {
+        out.println("10 seconds to start");
+        sleep(10 * 1000);
+
         Chooser<String, Integer> c = new Chooser<>(map(args[0]), ques -> -1, ques -> 1);
         c.installRule((answ) -> (answ < 0) ? c.choices(1) : c.choices(0));
 
