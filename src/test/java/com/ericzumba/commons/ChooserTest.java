@@ -19,7 +19,7 @@ public class ChooserTest {
     @Before
     public void setUp() throws Exception {
         c = new Chooser<>(ques -> -1, ques -> 1);
-        c.rule((answ) -> (answ < 0) ? c.firstChoice : c.alternative);
+        c.installRule((answ) -> (answ < 0) ? c.alternative : c.firstChoice);
     }
 
     @Test
@@ -31,6 +31,8 @@ public class ChooserTest {
     @Test
     public void choosesWiselyAfterFirstTime() throws Exception {
         String question = "irrelevant";
+        assertEquals(valueOf(-1), c.choose(question));
+        assertEquals(valueOf(1), c.choose(question));
         assertEquals(valueOf(-1), c.choose(question));
         assertEquals(valueOf(1), c.choose(question));
     }

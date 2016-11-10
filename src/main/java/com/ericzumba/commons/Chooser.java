@@ -1,5 +1,7 @@
 package com.ericzumba.commons;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /*
@@ -11,27 +13,28 @@ import java.util.function.Function;
 public class Chooser<T, R> {
     public final Function<T, R> firstChoice;
     public final Function<T, R> alternative;
+    public Map<T, Function<T, R>> knowledge = new ConcurrentHashMap<>();
+    private Function<R, Function<T, R>> rule;
 
     public Chooser(Function<T, R> firstChoice, Function<T, R> alternative) {
         this.firstChoice = firstChoice;
         this.alternative = alternative;
     }
 
-    public Chooser<T, R> rule(Function<R, Function<T, R>> rule) {
+    public Chooser<T, R> installRule(Function<R, Function<T, R>> rule) {
+        this.rule = rule;
         return this;
     }
 
     public R choose(T t) {
-        if(!shouldAlternative(t))
+        Function<T, R> choice = knowledge.get(t);
+        if(choice == null)
             return register(t, firstChoice.apply(t));
-        return register(t, alternative.apply(t));
+        return register(t, choice.apply(t));
     }
 
     private R register(T t, R r) {
+        knowledge.put(t, rule.apply(r));
         return r;
-    }
-
-    private boolean shouldAlternative(T t) {
-        return false;
     }
 }
