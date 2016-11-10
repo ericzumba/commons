@@ -1,0 +1,10 @@
+.gradle/*
+.idea/*
+build/*
+chooser.iml
+chooser.ipr
+chooser.iws
+gradle/*
+gradlew
+gradlew.bat
+settings.gradle
