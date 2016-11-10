@@ -19,7 +19,7 @@ public class ChooserTest {
     @Before
     public void setUp() throws Exception {
         c = new Chooser<>(ques -> -1, ques -> 1);
-        c.installRule((answ) -> (answ < 0) ? c.alternative : c.firstChoice);
+        c.installRule((answ) -> (answ < 0) ? c.choices(1) : c.choices(0));
     }
 
     @Test
