@@ -1,5 +1,8 @@
 package com.ericzumba.commons;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.MapMaker;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ public class PerformanceTest {
         out.println("10 seconds to start");
         sleep(10 * 1000);
 
-        Chooser<String, Integer> c = new Chooser<>(map(args[0]), ques -> -1, ques -> 1);
+        Chooser<String, Integer> c = new Chooser<>(guava(), ques -> -1, ques -> 1);
         c.installRule((answ) -> (answ < 0) ? c.choices(1) : c.choices(0));
 
         long experiments = parseLong(args[1]);
@@ -33,7 +36,14 @@ public class PerformanceTest {
 
         long elapsed = currentTimeMillis() - start;
         out.println(format("%d choices in %d seconds", experiments, elapsed / 1000));
-        out.println(format("%.0f%% bad decisions", (Double.valueOf(wrongDecisions) / experiments)));
+        out.println(format("%.4f%% bad decisions", ((100.0 * wrongDecisions) / experiments)));
+    }
+
+    private static Map guava() {
+        return CacheBuilder.newBuilder().build().asMap();
+//        return new MapMaker().concurrencyLevel(4) // 100% wrong decisions
+//                .weakKeys()
+//                .makeMap();
     }
 
     private static Map map(String impl) throws ClassNotFoundException, InstantiationException, IllegalAccessException {

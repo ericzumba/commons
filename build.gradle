@@ -10,9 +10,31 @@
 apply plugin: 'idea'
 apply plugin: 'java'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+
+
 jar {
     manifest {
         attributes 'Main-Class': 'com.ericzumba.commons.PerformanceTest'
+    }
+}
+
+shadowJar {
+    baseName = 'commons'
+    classifier = null
+    version = null
+    manifest {
+        inheritFrom project.tasks.jar.manifest
     }
 }
 
@@ -23,7 +45,6 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'org.ehcache:ehcache:3.1.0'
-
+    compile 'com.google.guava:guava:20.0'
     testCompile 'junit:junit:4.12'
 }
