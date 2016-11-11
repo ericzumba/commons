@@ -31,7 +31,7 @@ public class PerformanceTest {
             if(!c.choose(valueOf(i)).equals(-1)) throw new RuntimeException();
 
         int wrongDecisions = 0;
-        for(int i = 0; i < experiments; i++)
+        for(long i = experiments - 1; i >= 0; i--)
             if(!c.choose(valueOf(i)).equals(1)) wrongDecisions++;
 
         long elapsed = currentTimeMillis() - start;
@@ -40,10 +40,10 @@ public class PerformanceTest {
     }
 
     private static Map guava() {
-        return CacheBuilder.newBuilder().build().asMap();
-//        return new MapMaker().concurrencyLevel(4) // 100% wrong decisions
-//                .weakKeys()
-//                .makeMap();
+        return CacheBuilder.newBuilder()
+                .maximumSize(1000000)
+                .build()
+                .asMap();
     }
 
     private static Map map(String impl) throws ClassNotFoundException, InstantiationException, IllegalAccessException {

@@ -18,10 +18,10 @@ import static java.util.Collections.unmodifiableList;
  */
 public class Chooser<T, R> {
     public final List<Function<T, R>> choices;
-    public final Map<T, Function<T, R>> knowledge;
+    public final Map<Integer, Function<T, R>> knowledge;
     private Function<R, Function<T, R>> rule;
 
-    public Chooser(Map<T, Function<T, R>> knowledge, Function<T, R>... choices) {
+    public Chooser(Map<Integer, Function<T, R>> knowledge, Function<T, R>... choices) {
         this.knowledge = knowledge;
         this.choices = unmodifiableList(asList(choices));
     }
@@ -32,7 +32,7 @@ public class Chooser<T, R> {
     }
 
     public R choose(T t) {
-        Function<T, R> choice = knowledge.get(t);
+        Function<T, R> choice = knowledge.get(t.hashCode());
         if(choice == null)
             return register(t, choices.get(0).apply(t));
         return register(t, choice.apply(t));
@@ -43,7 +43,7 @@ public class Chooser<T, R> {
     }
 
     private R register(T t, R r) {
-        knowledge.put(t, rule.apply(r));
+        knowledge.put(t.hashCode(), rule.apply(r));
         return r;
     }
 }
