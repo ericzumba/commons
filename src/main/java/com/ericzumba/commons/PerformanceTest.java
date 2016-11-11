@@ -25,7 +25,7 @@ public class PerformanceTest {
         Chooser<String, Integer> c = new Chooser<>(guava(), ques -> -1, ques -> 1);
         c.installRule((answ) -> (answ < 0) ? c.choices(1) : c.choices(0));
 
-        long experiments = parseLong(args[1]);
+        long experiments = parseLong(args[0]);
         long start = currentTimeMillis();
         for(int i = 0; i < experiments; i++)
             if(!c.choose(valueOf(i)).equals(-1)) throw new RuntimeException();
@@ -41,7 +41,7 @@ public class PerformanceTest {
 
     private static Map guava() {
         return CacheBuilder.newBuilder()
-                .maximumSize(1000000)
+                .maximumSize(200000)
                 .build()
                 .asMap();
     }
