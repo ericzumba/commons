@@ -1,11 +1,8 @@
 package com.ericzumba.commons;
 
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.MapMaker;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 import java.util.function.Function;
 
 import static java.lang.Class.forName;
@@ -34,11 +31,11 @@ public class PerformanceTest {
         long experiments = parseLong(args[0]);
         long start = currentTimeMillis();
         for(int i = 0; i < experiments; i++)
-            if(!c.choose(valueOf(i)).equals(-1)) throw new RuntimeException();
+            if(!c.iterate(valueOf(i)).equals(-1)) throw new RuntimeException();
 
         int wrongDecisions = 0;
         for(long i = experiments - 1; i >= 0; i--)
-            if(!c.choose(valueOf(i)).equals(1)) wrongDecisions++;
+            if(!c.iterate(valueOf(i)).equals(1)) wrongDecisions++;
 
         long elapsed = currentTimeMillis() - start;
         out.println(format("%d choices in %d seconds", experiments, elapsed / 1000));

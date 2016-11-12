@@ -4,11 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import static java.lang.Integer.valueOf;
-import static java.lang.System.currentTimeMillis;
 import static org.junit.Assert.*;
 import static java.lang.String.format;
 
@@ -33,15 +31,15 @@ public class ChooserTest {
     @Test
     public void alwaysStartsByUsingTheFirstChoice() {;
         Integer request = 42;
-        assertEquals(valueOf(-1), c.choose(42));
+        assertEquals(valueOf(-1), c.iterate(42));
     }
 
     @Test
     public void choosesWiselyAfterFirstTime() throws Exception {
         Integer request = 42;
-        assertEquals(valueOf(-1), c.choose(request));
-        assertEquals(valueOf(1), c.choose(request));
-        assertEquals(valueOf(-1), c.choose(request));
-        assertEquals(valueOf(1), c.choose(request));
+        assertEquals(valueOf(-1), c.iterate(request));
+        assertEquals(valueOf(1), c.iterate(request));
+        assertEquals(valueOf(-1), c.iterate(request));
+        assertEquals(valueOf(1), c.iterate(request));
     }
 }
