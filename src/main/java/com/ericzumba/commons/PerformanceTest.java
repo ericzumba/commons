@@ -5,6 +5,7 @@ import com.google.common.collect.MapMaker;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.Function;
 
 import static java.lang.Class.forName;
@@ -46,7 +47,7 @@ public class PerformanceTest {
 
     private static Map guava() {
         return CacheBuilder.newBuilder()
-                .maximumSize(200000)
+                .maximumSize(640000)
                 .build()
                 .asMap();
     }
