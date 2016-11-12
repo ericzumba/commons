@@ -5,6 +5,7 @@ import com.google.common.collect.MapMaker;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import static java.lang.Class.forName;
 import static java.lang.Long.parseLong;
@@ -22,8 +23,12 @@ public class PerformanceTest {
         out.println("10 seconds to start");
         sleep(10 * 1000);
 
-        Chooser<String, Integer> c = new Chooser<>(guava(), ques -> -1, ques -> 1);
-        c.installRule((answ) -> (answ < 0) ? c.choices(1) : c.choices(0));
+        Function<String, Integer> first = (req) -> -1;
+        Function<String, Integer> second = (req) -> 1;
+
+        Function<Integer, Function<String, Integer>> next = (index) -> second;
+
+        Chooser<String, Integer> c = new Chooser<>(first, next,  guava());
 
         long experiments = parseLong(args[0]);
         long start = currentTimeMillis();

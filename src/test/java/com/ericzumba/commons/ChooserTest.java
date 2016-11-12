@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import static java.lang.Integer.valueOf;
 import static java.lang.System.currentTimeMillis;
@@ -19,26 +20,28 @@ import static java.lang.String.format;
  */
 public class ChooserTest {
 
-    private Chooser<String, Integer> c;
+    private Chooser<Integer, Integer> c;
 
     @Before
     public void setUp() throws Exception {
-        c = new Chooser<>(new HashMap<>(), ques -> -1, ques -> 1);
-        c.installRule((answ) -> (answ < 0) ? c.choices(1) : c.choices(0));
+        Function<Integer, Integer> negative = (req) -> -1;
+        Function<Integer, Integer> positive = (req) -> 1;
+        Function<Integer, Function<Integer, Integer>> flipFlop = (index) -> (index < 0) ? positive : negative;
+        c = new Chooser(negative, flipFlop,  new HashMap<>());
     }
 
     @Test
-    public void alwaysStartsByUsingTheFirstChoice() {
-        String question = "irrelevant";
-        assertEquals(valueOf(-1), c.choose(question));
+    public void alwaysStartsByUsingTheFirstChoice() {;
+        Integer request = 42;
+        assertEquals(valueOf(-1), c.choose(42));
     }
 
     @Test
     public void choosesWiselyAfterFirstTime() throws Exception {
-        String question = "irrelevant";
-        assertEquals(valueOf(-1), c.choose(question));
-        assertEquals(valueOf(1), c.choose(question));
-        assertEquals(valueOf(-1), c.choose(question));
-        assertEquals(valueOf(1), c.choose(question));
+        Integer request = 42;
+        assertEquals(valueOf(-1), c.choose(request));
+        assertEquals(valueOf(1), c.choose(request));
+        assertEquals(valueOf(-1), c.choose(request));
+        assertEquals(valueOf(1), c.choose(request));
     }
 }

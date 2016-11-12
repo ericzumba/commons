@@ -4,4 +4,4 @@ jar:
 	gradle shadowJar 
 
 run: jar
-	java -Xmx128m -Xms128m -jar $(ARTIFACT) 200000 
+	java -Xmx128m -Xms128m -jar $(ARTIFACT) 20000 
