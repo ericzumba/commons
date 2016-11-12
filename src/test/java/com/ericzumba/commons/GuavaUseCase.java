@@ -1,24 +1,13 @@
 package com.ericzumba.commons;
 
 import com.google.common.cache.CacheBuilder;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matcher;
-import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static java.lang.Long.parseLong;
-import static java.lang.String.format;
-import static java.lang.String.valueOf;
-import static java.lang.System.currentTimeMillis;
-import static java.lang.System.out;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by erictorti on 11/11/16.

@@ -1,11 +1,9 @@
 package com.ericzumba.commons;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.Function;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
 import static java.util.Optional.ofNullable;
 
 /*
